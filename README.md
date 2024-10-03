@@ -17,3 +17,20 @@ You can install the development version of radiantNetDashboard from
 # install.packages("pak")
 pak::pak("Cormochamelion/radiantNetDashboard")
 ```
+
+## Local development
+
+Run the app via
+
+``` r
+devtools::load_all()
+shiny::runApp(radiantNetDashboard())
+```
+
+### Guix
+
+Enter a development environment by running
+
+``` sh
+guix time-machine -C .guix/channels -- shell -m .guix/manifest.scm
+```

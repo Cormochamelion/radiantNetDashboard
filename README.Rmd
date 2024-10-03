@@ -29,3 +29,20 @@ You can install the development version of radiantNetDashboard from [GitHub](htt
 pak::pak("Cormochamelion/radiantNetDashboard")
 ```
 
+## Local development
+
+
+Run the app via
+
+```{r run-local, eval = FALSE}
+devtools::load_all()
+shiny::runApp(radiantNetDashboard())
+```
+
+### Guix
+
+Enter a development environment by running
+
+```{sh guix-shell, eval = FALSE}
+guix time-machine -C .guix/channels -- shell -m .guix/manifest.scm
+```
