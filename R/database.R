@@ -1,3 +1,4 @@
+import::here("config", "config_get" = "get")
 import::here("DBI", "dbConnect")
 import::here("dplyr", "collect", "filter", "tbl")
 import::here("lubridate", "as_date", "day", "month", "year")
@@ -5,7 +6,7 @@ import::here("magrittr", "%>%")
 import::here("RSQLite", "SQLite")
 import::here("withr", "with_db_connection")
 
-DB_PATH <- "../generation_and_usage.sqlite3"
+DB_PATH <- config_get("gen_usage_db_path")
 
 get_table_df <- function(db_path, table_name) {
   # Connect to the db at `db_path` and load `table_name` into memory as a

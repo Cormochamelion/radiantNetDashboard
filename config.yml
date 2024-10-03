@@ -1,0 +1,2 @@
+default:
+  gen_usage_db_path: !expr system.file("extdata/generation_and_usage.sqlite3", package = "radiantNetDashboard")
