@@ -1,3 +1,5 @@
+(use-modules (guix profiles))
+
 (define %packages (map specification->package
                        (list "r-config"
                              "r-data-table"

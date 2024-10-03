@@ -1,0 +1,20 @@
+(use-modules (gnu packages)
+             (guix build-system r)
+             (guix git)
+             (guix packages)
+             (guix licenses))
+
+(include "manifest.scm")
+
+(package
+  (name "r-radiantnetdashboard")
+  (version "0.0.0")
+  (source (git-checkout (url (dirname (dirname (current-filename))))))
+  (properties `((upstream-name . "radiantNetDashboard")))
+  (build-system r-build-system)
+  (native-inputs %dev-packages)
+  (propagated-inputs %packages)
+  (home-page "https://github.com/Cormochamelion/radiantNetDashboard.git")
+  (synopsis "RadiantNet Dashboard")
+  (description "Shiny dashboard for displaying @code{RadiantNet} data.")
+  (license expat))
