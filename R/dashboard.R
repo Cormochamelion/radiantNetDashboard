@@ -19,6 +19,7 @@ dashboard_server <- function(input, output) {
   output$daily_raw_df <- renderDT(get_raw_data_df_date(input$raw_data_date))
 }
 
+#' @export
 radiantNetDashboard <- function(...) {
   shinyApp(dashboard_ui, dashboard_server, ...)
 }
