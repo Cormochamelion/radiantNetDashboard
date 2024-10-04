@@ -44,7 +44,7 @@ get_app_with_pool <- function() {
       safe_date <- reactive(ensure_safe_date(input$raw_data_date, db_pool))
       daily_agg_df <- reactive(get_raw_data_df_date(db_pool, safe_date()))
 
-      output$daily_raw_plot <- renderPlot(
+      output$daily_state_of_charge <- renderPlot(
         variable_plot(daily_agg_df(), StateOfCharge)
       )
       output$daily_raw_df <- renderDT(daily_agg_df())
@@ -67,7 +67,7 @@ get_app_with_pool <- function() {
           datesdisabled = no_data_dates
         )
       },
-      plotOutput("daily_raw_plot"),
+      plotOutput("daily_state_of_charge"),
       DTOutput("daily_raw_df")
     )
   )
