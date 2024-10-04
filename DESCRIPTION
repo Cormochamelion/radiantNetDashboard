@@ -14,6 +14,7 @@ Imports:
     import,
     lubridate,
     magrittr,
+    pool,
     shiny,
     RSQLite
 Encoding: UTF-8

@@ -1,6 +1,7 @@
 import::here("config", "config_get" = "get")
 import::here("DBI", "dbConnect")
 import::here("DT", "DTOutput", "renderDT")
+import::here("pool", "dbPool")
 import::here(
   "shiny",
   "dateInput",
@@ -20,7 +21,7 @@ dashboard_ui <- fluidPage(
 )
 
 dashboard_server <- function(input, output) {
-  db_conn <- dbConnect(
+  db_conn <- dbPool(
     SQLite(),
     dbname = config_get("gen_usage_db_path")
   )
