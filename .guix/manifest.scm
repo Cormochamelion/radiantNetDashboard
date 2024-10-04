@@ -14,6 +14,7 @@
                              "r-pool"
                              "r-purrr"
                              "r-rlang"
+                             "r-tidyr"
                              "r-shiny"
                              "r-rsqlite")))
 

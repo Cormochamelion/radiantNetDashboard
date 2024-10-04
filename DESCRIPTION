@@ -18,6 +18,7 @@ Imports:
     pool,
     purrr,
     rlang,
+    tidyr,
     shiny,
     RSQLite
 Encoding: UTF-8
