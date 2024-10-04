@@ -19,7 +19,7 @@ import::here(
   .character_only = TRUE, .directory = "R"
 )
 import::here(
-  "plots.R", "state_of_charge_plot",
+  "plots.R", "variable_plot",
   .character_only = TRUE, .directory = "R"
 )
 
@@ -45,7 +45,7 @@ get_app_with_pool <- function() {
       daily_agg_df <- reactive(get_raw_data_df_date(db_pool, safe_date()))
 
       output$daily_raw_plot <- renderPlot(
-        state_of_charge_plot(daily_agg_df())
+        variable_plot(daily_agg_df(), StateOfCharge)
       )
       output$daily_raw_df <- renderDT(daily_agg_df())
     },

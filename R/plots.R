@@ -12,11 +12,11 @@ transmute_date_column <- function(data) {
     select(-time)
 }
 
-state_of_charge_plot <- function(data) {
+variable_plot <- function(data, variable) {
   data %>%
     transmute_date_column() %>%
     ggplot(
-      aes(date, StateOfCharge)
+      aes(date, {{ variable }})
     ) +
     geom_line() +
     theme_minimal()
