@@ -1,3 +1,5 @@
+import::here("config", "config_get" = "get")
+import::here("DBI", "dbConnect")
 import::here("DT", "DTOutput", "renderDT")
 import::here(
   "shiny",
@@ -5,6 +7,7 @@ import::here(
   "fluidPage",
   "shinyApp"
 )
+import::here("RSQLite", "SQLite")
 
 import::here(
   "database.R", "get_raw_data_df_date",
@@ -17,7 +20,13 @@ dashboard_ui <- fluidPage(
 )
 
 dashboard_server <- function(input, output) {
-  output$daily_raw_df <- renderDT(get_raw_data_df_date(input$raw_data_date))
+  db_conn <- dbConnect(
+    SQLite(),
+    dbname = config_get("gen_usage_db_path")
+  )
+  output$daily_raw_df <- renderDT(
+    get_raw_data_df_date(db_conn, input$raw_data_date)
+  )
 }
 
 #' @export

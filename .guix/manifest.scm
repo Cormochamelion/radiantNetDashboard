@@ -11,8 +11,7 @@
                              "r-lubridate"
                              "r-magrittr"
                              "r-shiny"
-                             "r-rsqlite"
-                             "r-withr")))
+                             "r-rsqlite")))
 
 (define %dev-packages (map specification->package
                            (list "r"
