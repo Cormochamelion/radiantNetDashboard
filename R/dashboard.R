@@ -1,11 +1,12 @@
 import::here("config", "config_get" = "get")
 import::here("DBI", "dbConnect")
 import::here("DT", "DTOutput", "renderDT")
-import::here("pool", "dbPool")
+import::here("pool", "dbPool", "poolClose")
 import::here(
   "shiny",
   "dateInput",
   "fluidPage",
+  "onStop",
   "shinyApp"
 )
 import::here("RSQLite", "SQLite")
@@ -20,17 +21,22 @@ dashboard_ui <- fluidPage(
   DTOutput("daily_raw_df")
 )
 
-dashboard_server <- function(input, output) {
-  db_conn <- dbPool(
+get_server_with_pool <- function() {
+  db_pool <- dbPool(
     SQLite(),
     dbname = config_get("gen_usage_db_path")
   )
-  output$daily_raw_df <- renderDT(
-    get_raw_data_df_date(db_conn, input$raw_data_date)
-  )
+
+  onStop(function() poolClose(db_pool))
+
+  function(input, output) {
+    output$daily_raw_df <- renderDT(
+      get_raw_data_df_date(db_pool, input$raw_data_date)
+    )
+  }
 }
 
 #' @export
 radiantNetDashboard <- function(...) {
-  shinyApp(dashboard_ui, dashboard_server, ...)
+  shinyApp(dashboard_ui, get_server_with_pool(), ...)
 }
