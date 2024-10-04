@@ -16,12 +16,7 @@ import::here(
   .character_only = TRUE, .directory = "R"
 )
 
-dashboard_ui <- fluidPage(
-  dateInput("raw_data_date", "Daily output"),
-  DTOutput("daily_raw_df")
-)
-
-get_server_with_pool <- function() {
+get_app_with_pool <- function() {
   db_pool <- dbPool(
     SQLite(),
     dbname = config_get("gen_usage_db_path")
@@ -29,14 +24,21 @@ get_server_with_pool <- function() {
 
   onStop(function() poolClose(db_pool))
 
-  function(input, output) {
-    output$daily_raw_df <- renderDT(
-      get_raw_data_df_date(db_pool, input$raw_data_date)
+  list(
+    server = function(input, output) {
+      output$daily_raw_df <- renderDT(
+        get_raw_data_df_date(db_pool, input$raw_data_date)
+      )
+    },
+    ui = fluidPage(
+      dateInput("raw_data_date", "Daily output"),
+      DTOutput("daily_raw_df")
     )
-  }
+  )
 }
 
 #' @export
 radiantNetDashboard <- function(...) {
-  shinyApp(dashboard_ui, get_server_with_pool(), ...)
+  components <- get_app_with_pool()
+  shinyApp(components$ui, components$server, ...)
 }
