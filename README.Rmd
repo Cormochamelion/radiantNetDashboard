@@ -31,12 +31,25 @@ pak::pak("Cormochamelion/radiantNetDashboard")
 
 ## Local development
 
+There is a quick-start script at `dev/run_app.sh`.
 
-Run the app via
+## Within R
+
+Simply run:
 
 ```{r run-local, eval = FALSE}
 devtools::load_all()
 shiny::runApp(radiantNetDashboard())
+```
+
+### Docker
+
+There is a docker file available. Build & run an image with:
+
+```{sh docker-build-run, eval = FALSE}
+docker build -t "radiant-net-dashboard" . && \
+  docker run --it --rm --network=host \
+    --name radiant-net-dashboard radiant-net-dashboard
 ```
 
 ### Guix
