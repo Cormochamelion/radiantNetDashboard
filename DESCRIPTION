@@ -11,6 +11,7 @@ Imports:
     dbplyr,
     dplyr,
     DT,
+    ggplot2,
     import,
     lubridate,
     magrittr,

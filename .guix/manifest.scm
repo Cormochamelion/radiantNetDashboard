@@ -7,6 +7,7 @@
                              "r-dbi"
                              "r-dbplyr"
                              "r-dplyr"
+                             "r-ggplot2"
                              "r-import"
                              "r-lubridate"
                              "r-magrittr"
