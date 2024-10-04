@@ -15,6 +15,7 @@ Imports:
     lubridate,
     magrittr,
     pool,
+    purrr,
     rlang,
     shiny,
     RSQLite

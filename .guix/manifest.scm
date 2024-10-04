@@ -11,6 +11,7 @@
                              "r-lubridate"
                              "r-magrittr"
                              "r-pool"
+                             "r-purrr"
                              "r-rlang"
                              "r-shiny"
                              "r-rsqlite")))
