@@ -7,13 +7,19 @@ import::here(
   "dateInput",
   "fluidPage",
   "onStop",
+  "plotOutput",
   "reactive",
+  "renderPlot",
   "shinyApp"
 )
 import::here("RSQLite", "SQLite")
 
 import::here(
   "database.R", "get_raw_data_df_date",
+  .character_only = TRUE, .directory = "R"
+)
+import::here(
+  "plots.R", "state_of_charge_plot",
   .character_only = TRUE, .directory = "R"
 )
 
@@ -35,12 +41,13 @@ get_app_with_pool <- function() {
 
   list(
     server = function(input, output) {
-      output$daily_raw_df <- renderDT(
-        get_raw_data_df_date(
-          db_pool,
-          reactive(ensure_safe_date(input$raw_data_date, db_pool))()
-        )
+      safe_date <- reactive(ensure_safe_date(input$raw_data_date, db_pool))
+      daily_agg_df <- reactive(get_raw_data_df_date(db_pool, safe_date()))
+
+      output$daily_raw_plot <- renderPlot(
+        state_of_charge_plot(daily_agg_df())
       )
+      output$daily_raw_df <- renderDT(daily_agg_df())
     },
     ui = fluidPage(
       {
@@ -60,6 +67,7 @@ get_app_with_pool <- function() {
           datesdisabled = no_data_dates
         )
       },
+      plotOutput("daily_raw_plot"),
       DTOutput("daily_raw_df")
     )
   )
