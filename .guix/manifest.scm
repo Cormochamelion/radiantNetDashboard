@@ -1,5 +1,6 @@
 (define %packages (map specification->package
-                       (list "r-data-table"
+                       (list "r-config"
+                             "r-data-table"
                              "r-dt"
                              "r-dbi"
                              "r-dbplyr"
