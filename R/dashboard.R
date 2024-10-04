@@ -7,6 +7,7 @@ import::here(
   "dateInput",
   "fluidPage",
   "onStop",
+  "reactive",
   "shinyApp"
 )
 import::here("RSQLite", "SQLite")
@@ -15,6 +16,14 @@ import::here(
   "database.R", "get_raw_data_df_date",
   .character_only = TRUE, .directory = "R"
 )
+
+ensure_safe_date <- function(date, db_conn) {
+  # Ensure a date is valid, else return the latest date with data.
+  if (length(date) != 1) {
+    date <- get_raw_data_stat_date(db_conn, stat_fun = max)
+  }
+  date
+}
 
 get_app_with_pool <- function() {
   db_pool <- dbPool(
@@ -27,7 +36,10 @@ get_app_with_pool <- function() {
   list(
     server = function(input, output) {
       output$daily_raw_df <- renderDT(
-        get_raw_data_df_date(db_pool, input$raw_data_date)
+        get_raw_data_df_date(
+          db_pool,
+          reactive(ensure_safe_date(input$raw_data_date, db_pool))()
+        )
       )
     },
     ui = fluidPage(
