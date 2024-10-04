@@ -48,12 +48,16 @@ get_app_with_pool <- function() {
         start_date <- all_dates[1]
         stop_date <- all_dates[length(all_dates)]
 
+        full_date_range <- seq(start_date, stop_date, by = "day")
+        no_data_dates <- setdiff(full_date_range, all_dates)
+
         dateInput(
           "raw_data_date",
           "Daily output",
           value = stop_date,
           min = start_date,
-          max = stop_date
+          max = stop_date,
+          datesdisabled = no_data_dates
         )
       },
       DTOutput("daily_raw_df")
