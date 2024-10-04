@@ -7,7 +7,8 @@ import::here(
 )
 
 import::here(
-  "database.R", "get_raw_data_df_date", .character_only = TRUE, .directory = "R"
+  "database.R", "get_raw_data_df_date",
+  .character_only = TRUE, .directory = "R"
 )
 
 dashboard_ui <- fluidPage(
