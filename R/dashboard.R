@@ -31,11 +31,18 @@ get_app_with_pool <- function() {
       )
     },
     ui = fluidPage(
-      dateInput(
-        "raw_data_date",
-        "Daily output",
-        min = get_raw_data_stat_date(db_pool, min),
-        max = get_raw_data_stat_date(db_pool, max)),
+      {
+        start_date <- get_raw_data_stat_date(db_pool, stat_fun = min)
+        stop_date <- get_raw_data_stat_date(db_pool, stat_fun = max)
+
+        dateInput(
+          "raw_data_date",
+          "Daily output",
+          value = stop_date,
+          min = start_date,
+          max = stop_date
+        )
+      },
       DTOutput("daily_raw_df")
     )
   )
