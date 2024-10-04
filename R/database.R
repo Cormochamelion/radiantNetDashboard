@@ -1,6 +1,33 @@
-import::here("dplyr", "collect", "filter", "tbl")
-import::here("lubridate", "as_date", "day", "month", "year")
-import::here("magrittr", "%>%")
+import::here("dplyr", "collect", "filter", "tbl", "select")
+import::here("lubridate", "as_date", "day", "make_date", "month", "year")
+import::here("magrittr", "%>%", "extract")
+import::here("rlang", "enexpr", "expr")
+
+get_raw_data_stat_date <- function(db_conn,
+                                   stat_fun = min,
+                                   fun_args = list(na.rm = TRUE)) {
+  # Get date matching a statistic with data from the raw_data table.
+
+  # Since dbplyr::filter.tbl_lazy converts functions to SQL, I can't
+  # smply go `filter(time == stat_fun(time))`, as it tries to convert
+  # stat_fun literally. I need to construct my own call to filter with
+  # stat_fun injected.
+  enq_stat_fun <- enexpr(stat_fun)
+  filter_expr <- expr(filter(., time == (!!enq_stat_fun)(time, !!!fun_args)))
+
+  db_conn %>%
+    tbl("raw_data") %>%
+    {
+      eval(filter_expr)
+    } %>%
+    # Should be only one row.
+    collect() %>%
+    select(year, month, day) %>%
+    extract(1, ) %>%
+    with(
+      make_date(year, month, day)
+    )
+}
 
 get_table_df <- function(table_name, db_conn) {
   # Load `table_name` into memory as a tibble.
