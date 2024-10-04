@@ -44,8 +44,9 @@ get_app_with_pool <- function() {
     },
     ui = fluidPage(
       {
-        start_date <- get_raw_data_stat_date(db_pool, stat_fun = min)
-        stop_date <- get_raw_data_stat_date(db_pool, stat_fun = max)
+        all_dates <- get_data_dates(db_pool)
+        start_date <- all_dates[1]
+        stop_date <- all_dates[length(all_dates)]
 
         dateInput(
           "raw_data_date",

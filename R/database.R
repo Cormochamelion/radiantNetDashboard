@@ -1,7 +1,8 @@
-import::here("dplyr", "collect", "filter", "tbl", "select")
+import::here("dplyr", "arrange", "collect", "filter", "tbl", "select")
 import::here("lubridate", "as_date", "day", "make_date", "month", "year")
 import::here("magrittr", "%>%", "extract")
-import::here("rlang", "enexpr", "expr")
+import::here("purrr", "map_vec", "pmap")
+import::here("rlang", "enexpr", "expr", "list2")
 
 get_raw_data_stat_date <- function(db_conn,
                                    stat_fun = min,
@@ -27,6 +28,18 @@ get_raw_data_stat_date <- function(db_conn,
     with(
       make_date(year, month, day)
     )
+}
+
+get_data_dates <- function(db_conn) {
+  # Get all dates with data available.
+  db_conn %>%
+    tbl("daily_aggregated") %>%
+    select(year, month, day) %>%
+    arrange(year, month, day) %>%
+    collect() %>%
+    # Convert to list of rows.
+    pmap(list2) %>%
+    map_vec(\(row) with(row, make_date(year, month, day)))
 }
 
 get_table_df <- function(table_name, db_conn) {
