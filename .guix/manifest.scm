@@ -10,6 +10,7 @@
                              "r-import"
                              "r-lubridate"
                              "r-magrittr"
+                             "r-pool"
                              "r-shiny"
                              "r-rsqlite")))
 
