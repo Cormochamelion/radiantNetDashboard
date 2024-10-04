@@ -19,7 +19,7 @@ import::here(
   .character_only = TRUE, .directory = "R"
 )
 import::here(
-  "plots.R", "variable_plot",
+  "plots.R", "variable_plot", "wattage_plot",
   .character_only = TRUE, .directory = "R"
 )
 
@@ -47,6 +47,9 @@ get_app_with_pool <- function() {
       output$daily_state_of_charge <- renderPlot(
         variable_plot(daily_agg_df(), StateOfCharge)
       )
+
+      output$daily_wattage <- renderPlot(wattage_plot(daily_agg_df()))
+
       output$daily_raw_df <- renderDT(daily_agg_df())
     },
     ui = fluidPage(
@@ -67,6 +70,7 @@ get_app_with_pool <- function() {
           datesdisabled = no_data_dates
         )
       },
+      plotOutput("daily_wattage"),
       plotOutput("daily_state_of_charge"),
       DTOutput("daily_raw_df")
     )
