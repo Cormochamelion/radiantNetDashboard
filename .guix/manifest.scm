@@ -17,6 +17,7 @@
 (define %dev-packages (map specification->package
                            (list "r"
                                  "r-devtools"
+                                 "r-styler"
                                  "r-usethis")))
 
 (packages->manifest (append %dev-packages %packages))
