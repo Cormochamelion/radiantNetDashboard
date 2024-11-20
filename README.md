@@ -37,7 +37,7 @@ There is a docker file available. Build & run an image with:
 
 ``` sh
 docker build -t "radiant-net-dashboard" . && \
-  docker run --it --rm --network=host \
+  docker run -it --rm --network=host \
     --name radiant-net-dashboard radiant-net-dashboard
 ```
 
@@ -46,5 +46,5 @@ docker build -t "radiant-net-dashboard" . && \
 Enter a development environment by running
 
 ``` sh
-guix time-machine -C .guix/channels -- shell -m .guix/manifest.scm
+guix time-machine -C .guix/channels.scm -- shell -m .guix/manifest.scm
 ```
