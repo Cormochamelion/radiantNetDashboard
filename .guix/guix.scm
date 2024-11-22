@@ -1,4 +1,5 @@
 (use-modules (gnu packages)
+             (guix gexp)
              (guix build-system r)
              (guix git)
              (guix packages)
@@ -9,7 +10,15 @@
 (package
   (name "r-radiantnetdashboard")
   (version "0.0.0")
-  (source (git-checkout (url (dirname (dirname (current-filename))))))
+  (source (local-file
+          (dirname (dirname (current-filename)))
+          #:recursive? #t
+          #:select? (lambda
+                      (file stat)
+                      ; Exclude hidden dirs & files.
+                      (not (string=?
+                            (string-copy (basename file) 0 1)
+                            ".")))))
   (properties `((upstream-name . "radiantNetDashboard")))
   (build-system r-build-system)
   (native-inputs %dev-packages)
