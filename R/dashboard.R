@@ -1,4 +1,3 @@
-import::here("config", "config_get" = "get")
 import::here("DBI", "dbConnect")
 import::here("DT", "DTOutput", "renderDT")
 import::here("pool", "dbPool", "poolClose")
@@ -34,7 +33,7 @@ ensure_safe_date <- function(date, db_conn) {
 get_app_with_pool <- function() {
   db_pool <- dbPool(
     SQLite(),
-    dbname = config_get("gen_usage_db_path")
+    dbname = get_config_db_path()
   )
 
   onStop(function() poolClose(db_pool))
