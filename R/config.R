@@ -1,8 +1,5 @@
-import::here("config", "config_get" = "get")
-import::here("rappdirs", "user_data_dir", "site_data_dir")
-
 #' Extract package information from the citation.
-#' 
+#'
 #' @param pkg_name A string giving the name of the package for which the info
 #'   should be retrieved.
 #' @importFrom utils citation
@@ -32,6 +29,8 @@ get_pkg_info <- function(pkg_name = "radiantNetDashboard") {
 #'   `location %in% c("site", "user")`.
 #'
 #' @returns A path in string form to the chosen DB.
+#'
+#' @importFrom rappdirs user_data_dir site_data_dir
 choose_db_path <- function(location = "default",
                            path = system.file(
                              "extdata/generation_and_usage.sqlite3",
@@ -72,7 +71,7 @@ get_config_db_path <- function() {
     package = "radiantNetDashboard"
   )
   choose_db_path(
-    location = config_get("gen_usage_db_loc", file = default_config_path),
-    path = config_get("gen_usage_db_path", file = default_config_path)
+    location = config::get("gen_usage_db_loc", file = default_config_path),
+    path = config::get("gen_usage_db_path", file = default_config_path)
   )
 }

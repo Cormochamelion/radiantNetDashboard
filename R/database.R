@@ -1,10 +1,9 @@
-import::here("dplyr", "arrange", "collect", "filter", "tbl", "select")
-import::here("lubridate", "as_date", "day", "make_date", "month", "year")
-import::here("magrittr", "%>%", "extract")
-import::here("purrr", "map_vec", "pmap")
-import::here("rlang", "enexpr", "expr", "list2")
-
 #' Get date matching a statistic with data from the raw_data table.
+#'
+#' @importFrom dplyr collect filter tbl select
+#' @importFrom lubridate make_date
+#' @importFrom magrittr extract
+#' @importFrom rlang enexpr expr
 get_raw_data_stat_date <- function(db_conn,
                                    stat_fun = min,
                                    fun_args = list(na.rm = TRUE)) {
@@ -30,6 +29,11 @@ get_raw_data_stat_date <- function(db_conn,
 }
 
 #' Get all dates with data available.
+#'
+#' @importFrom dplyr arrange collect tbl select
+#' @importFrom lubridate make_date
+#' @importFrom purrr map_vec pmap
+#' @importFrom rlang list2
 get_data_dates <- function(db_conn) {
   db_conn %>%
     tbl("daily_aggregated") %>%
@@ -42,6 +46,8 @@ get_data_dates <- function(db_conn) {
 }
 
 #' Load `table_name` into memory as a tibble.
+#'
+#' @importFrom dplyr collect tbl
 get_table_df <- function(table_name, db_conn) {
   db_conn %>%
     tbl(table_name) %>%
@@ -52,6 +58,9 @@ get_daily_agg_df <- function(db_conn) get_table_df("daily_aggregated", db_conn)
 get_raw_data_df <- function(db_conn) get_table_df("raw_data", db_conn)
 
 #' Load the raw data df filtered for a given date into memory as a tibble.
+#'
+#' @importFrom dplyr collect filter tbl
+#' @importFrom lubridate day month year
 get_raw_data_df_date <- function(db_conn, date, format = "%Y-%m-%d") {
   parsed_date <- strptime(date, format)
 
