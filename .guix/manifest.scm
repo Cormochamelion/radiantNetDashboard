@@ -13,6 +13,7 @@
                              "r-magrittr"
                              "r-pool"
                              "r-purrr"
+                             "r-rappdirs"
                              "r-rlang"
                              "r-tidyr"
                              "r-shiny"
