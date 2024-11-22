@@ -1,27 +1,3 @@
-import::here("DBI", "dbConnect")
-import::here("DT", "DTOutput", "renderDT")
-import::here("pool", "dbPool", "poolClose")
-import::here(
-  "shiny",
-  "dateInput",
-  "fluidPage",
-  "onStop",
-  "plotOutput",
-  "reactive",
-  "renderPlot",
-  "shinyApp"
-)
-import::here("RSQLite", "SQLite")
-
-import::here(
-  "database.R", "get_raw_data_df_date",
-  .character_only = TRUE, .directory = "R"
-)
-import::here(
-  "plots.R", "variable_plot", "wattage_plot",
-  .character_only = TRUE, .directory = "R"
-)
-
 #' Ensure a date is valid, else return the latest date with data.
 ensure_safe_date <- function(date, db_conn) {
   if (length(date) != 1) {
@@ -30,6 +6,10 @@ ensure_safe_date <- function(date, db_conn) {
   date
 }
 
+#' @importFrom DT DTOutput renderDT
+#' @importFrom pool dbPool poolClose
+#' @importFrom shiny dateInput fluidPage onStop plotOutput reactive renderPlot
+#' @importFrom RSQLite SQLite
 get_app_with_pool <- function() {
   db_pool <- dbPool(
     SQLite(),
@@ -78,6 +58,7 @@ get_app_with_pool <- function() {
 
 #' Run the dashboard.
 #' @param ... Arguments passed to [shiny::shinyApp()].
+#' @importFrom shiny shinyApp
 #' @export
 radiantNetDashboard <- function(...) {
   components <- get_app_with_pool()

@@ -1,10 +1,5 @@
-import::here("dplyr", "all_of", "case_match", "mutate", "select")
-import::here("ggplot2", .all = TRUE)
-import::here("lubridate", "make_datetime")
-import::here("magrittr", "%>%")
-import::here("rlang", "new_formula")
-import::here("tidyr", "drop_na", "pivot_longer")
-
+#' @importFrom dplyr mutate select
+#' @importFrom lubridate make_datetime
 transmute_date_column <- function(data) {
   data %>%
     mutate(
@@ -14,6 +9,7 @@ transmute_date_column <- function(data) {
     select(-time)
 }
 
+#' @import ggplot2
 variable_plot <- function(data, variable) {
   data %>%
     transmute_date_column() %>%
@@ -25,6 +21,12 @@ variable_plot <- function(data, variable) {
     theme_minimal()
 }
 
+#' @importFrom dplyr all_of case_match mutate select
+#' @importFrom purrr imap
+#' @importFrom rlang new_formula
+#' @importFrom tidyr drop_na pivot_longer
+#'
+#' @import ggplot2
 wattage_plot <- function(data) {
   wattage_cols <- c(
     "To Battery" = "FromGenToBatt",
@@ -36,7 +38,7 @@ wattage_plot <- function(data) {
   area_cols <- c("To Battery", "To Consumer", "To Grid")
   line_cols <- c("Total consumed")
 
-  col_rename <- purrr::imap(
+  col_rename <- imap(
     wattage_cols,
     \(old_col, new_col) new_formula(old_col, new_col)
   )
