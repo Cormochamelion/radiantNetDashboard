@@ -3,9 +3,6 @@
 
 # radiantNetDashboard
 
-<!-- badges: start -->
-<!-- badges: end -->
-
 Shiny app for displaying solar generation and usage data.
 
 ## Installation
