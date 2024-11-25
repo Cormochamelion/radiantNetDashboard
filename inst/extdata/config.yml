@@ -5,5 +5,10 @@ default:
 local:
   gen_usage_db_loc: user
 
+path:
+  gen_usage_db_loc: path
+  gen_usage_db_path: !expr Sys.getenv("RADIANT_NET_DASHBOARD_PATH")
+
+
 docker-compose:
   inherits: local
