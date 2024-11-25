@@ -19,7 +19,7 @@ pak::pak("Cormochamelion/radiantNetDashboard")
 
 There is a quick-start script at `dev/run_app.sh`.
 
-## Within R
+### Within R
 
 Simply run:
 
