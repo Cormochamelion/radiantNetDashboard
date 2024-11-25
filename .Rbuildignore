@@ -1,6 +1,6 @@
 ^Dockerfile$
 ^LICENSE\.md$
 ^README\.Rmd$
-^\.dev$
 ^\.git$
 ^\.guix$
+^dev$
