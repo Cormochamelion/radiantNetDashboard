@@ -17,7 +17,10 @@ pak::pak("Cormochamelion/radiantNetDashboard")
 
 ## Local development
 
-There is a quick-start script at `dev/run_app.sh`.
+There is a quick-start script at `dev/run_app.sh`. If you have an
+existing database that you wish to connect to, set the environment
+variables `R_CONFIG_ACTIVE` to “path” and `RADIANT_NET_DASHBOARD_PATH`
+to where ever your DB is located.
 
 ### Within R
 
