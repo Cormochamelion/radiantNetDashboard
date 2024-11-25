@@ -25,6 +25,7 @@ Imports:
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.3.2
+Roxygen: list(markdown = TRUE)
 URL: https://github.com/Cormochamelion/radiantNetDashboard.git
 BugReports: https://github.com/Cormochamelion/radiantNetDashboard.git/issues
 Suggests: 
