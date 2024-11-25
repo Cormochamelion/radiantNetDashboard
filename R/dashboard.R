@@ -77,6 +77,8 @@ get_app_with_pool <- function() {
   )
 }
 
+#' Run the dashboard.
+#' @param ... Arguments passed to [shiny::shinyApp()].
 #' @export
 radiantNetDashboard <- function(...) {
   components <- get_app_with_pool()
