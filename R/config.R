@@ -67,8 +67,12 @@ choose_db_path <- function(location = "default",
 #' Get the configured path to the generation and usage DB, as determined by
 #' `choose_db_path`.
 get_config_db_path <- function() {
+  default_config_path <- system.file(
+    "extdata/config.yml",
+    package = "radiantNetDashboard"
+  )
   choose_db_path(
-    location = config_get("gen_usage_db_loc"),
-    path = config_get("gen_usage_db_path")
+    location = config_get("gen_usage_db_loc", file = default_config_path),
+    path = config_get("gen_usage_db_path", file = default_config_path)
   )
 }
