@@ -1,5 +1,6 @@
 #' Get date matching a statistic with data from the raw_data table.
 #'
+#' @import dbplyr
 #' @importFrom dplyr collect filter tbl select
 #' @importFrom lubridate make_date
 #' @importFrom magrittr extract
@@ -30,6 +31,7 @@ get_raw_data_stat_date <- function(db_conn,
 
 #' Get all dates with data available.
 #'
+#' @import dbplyr
 #' @importFrom dplyr arrange collect tbl select
 #' @importFrom lubridate make_date
 #' @importFrom purrr map_vec pmap
@@ -47,6 +49,7 @@ get_data_dates <- function(db_conn) {
 
 #' Load `table_name` into memory as a tibble.
 #'
+#' @import dbplyr
 #' @importFrom dplyr collect tbl
 get_table_df <- function(table_name, db_conn) {
   db_conn %>%
@@ -59,6 +62,7 @@ get_raw_data_df <- function(db_conn) get_table_df("raw_data", db_conn)
 
 #' Load the raw data df filtered for a given date into memory as a tibble.
 #'
+#' @import dbplyr
 #' @importFrom dplyr collect filter tbl
 #' @importFrom lubridate day month year
 get_raw_data_df_date <- function(db_conn, date, format = "%Y-%m-%d") {
