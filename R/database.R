@@ -53,7 +53,7 @@ get_daily_agg_df <- function(db_conn) get_table_df("daily_aggregated", db_conn)
 get_raw_data_df <- function(db_conn) get_table_df("raw_data", db_conn)
 
 get_raw_data_df_date <- function(db_conn, date, format = "%Y-%m-%d") {
-  # Load `table_name` into memory as a tibble.
+  # Load the raw data df filtered for a given date into memory as a tibble.
   parsed_date <- strptime(date, format)
 
   date_components <- list(
