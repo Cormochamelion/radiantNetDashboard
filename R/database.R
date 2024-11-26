@@ -4,11 +4,10 @@ import::here("magrittr", "%>%", "extract")
 import::here("purrr", "map_vec", "pmap")
 import::here("rlang", "enexpr", "expr", "list2")
 
+#' Get date matching a statistic with data from the raw_data table.
 get_raw_data_stat_date <- function(db_conn,
                                    stat_fun = min,
                                    fun_args = list(na.rm = TRUE)) {
-  # Get date matching a statistic with data from the raw_data table.
-
   # Since dbplyr::filter.tbl_lazy converts functions to SQL, I can't
   # smply go `filter(time == stat_fun(time))`, as it tries to convert
   # stat_fun literally. I need to construct my own call to filter with
@@ -30,8 +29,8 @@ get_raw_data_stat_date <- function(db_conn,
     )
 }
 
+#' Get all dates with data available.
 get_data_dates <- function(db_conn) {
-  # Get all dates with data available.
   db_conn %>%
     tbl("daily_aggregated") %>%
     select(year, month, day) %>%
@@ -42,8 +41,8 @@ get_data_dates <- function(db_conn) {
     map_vec(\(row) with(row, make_date(year, month, day)))
 }
 
+#' Load `table_name` into memory as a tibble.
 get_table_df <- function(table_name, db_conn) {
-  # Load `table_name` into memory as a tibble.
   db_conn %>%
     tbl(table_name) %>%
     collect()
@@ -52,8 +51,8 @@ get_table_df <- function(table_name, db_conn) {
 get_daily_agg_df <- function(db_conn) get_table_df("daily_aggregated", db_conn)
 get_raw_data_df <- function(db_conn) get_table_df("raw_data", db_conn)
 
+#' Load the raw data df filtered for a given date into memory as a tibble.
 get_raw_data_df_date <- function(db_conn, date, format = "%Y-%m-%d") {
-  # Load the raw data df filtered for a given date into memory as a tibble.
   parsed_date <- strptime(date, format)
 
   date_components <- list(

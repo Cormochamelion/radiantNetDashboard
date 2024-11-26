@@ -22,8 +22,8 @@ import::here(
   .character_only = TRUE, .directory = "R"
 )
 
+#' Ensure a date is valid, else return the latest date with data.
 ensure_safe_date <- function(date, db_conn) {
-  # Ensure a date is valid, else return the latest date with data.
   if (length(date) != 1) {
     date <- get_raw_data_stat_date(db_conn, stat_fun = max)
   }
