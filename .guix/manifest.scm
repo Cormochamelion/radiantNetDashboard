@@ -2,26 +2,26 @@
 
 (define %packages (map specification->package
                        (list "r-config"
-                             "r-data-table"
-                             "r-dt"
-                             "r-dbi"
                              "r-dbplyr"
                              "r-dplyr"
+                             "r-dt"
                              "r-ggplot2"
-                             "r-import"
                              "r-lubridate"
                              "r-magrittr"
                              "r-pool"
                              "r-purrr"
                              "r-rappdirs"
                              "r-rlang"
+                             "r-rsqlite"
                              "r-tidyr"
-                             "r-shiny"
-                             "r-rsqlite")))
+                             "r-shiny")))
 
 (define %dev-packages (map specification->package
                            (list "r"
+                                 "r-dbi"
                                  "r-devtools"
+                                 "r-import"
+                                 "r-testthat"
                                  "r-styler"
                                  "r-usethis")))
 
