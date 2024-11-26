@@ -12,7 +12,6 @@ Imports:
     dplyr,
     DT,
     ggplot2,
-    import,
     lubridate,
     magrittr,
     pool,
@@ -29,6 +28,7 @@ Roxygen: list(markdown = TRUE)
 URL: https://github.com/Cormochamelion/radiantNetDashboard.git
 BugReports: https://github.com/Cormochamelion/radiantNetDashboard.git/issues
 Suggests: 
+    import,
     testthat (>= 3.0.0),
     withr
 Config/testthat/edition: 3
