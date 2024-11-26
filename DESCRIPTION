@@ -7,7 +7,6 @@ Description: Shiny dashboard for displaying RadiantNet data.
 License: MIT + file LICENSE
 Imports: 
     config,
-    DBI,
     dbplyr,
     dplyr,
     DT,
@@ -28,6 +27,7 @@ Roxygen: list(markdown = TRUE)
 URL: https://github.com/Cormochamelion/radiantNetDashboard.git
 BugReports: https://github.com/Cormochamelion/radiantNetDashboard.git/issues
 Suggests: 
+    DBI,
     import,
     testthat (>= 3.0.0),
     withr
