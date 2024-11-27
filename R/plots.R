@@ -32,10 +32,11 @@ wattage_plot <- function(data) {
     "To Battery" = "FromGenToBatt",
     "To Consumer" = "FromGenToConsumer",
     "To Grid" = "FromGenToGrid",
+    "To Wallbox" = "FromGenToWattPilot",
     "Total consumed" = "ToConsumer"
   )
 
-  area_cols <- c("To Battery", "To Consumer", "To Grid")
+  area_cols <- c("To Battery", "To Consumer", "To Grid", "To Wallbox")
   line_cols <- c("Total consumed")
 
   col_rename <- imap(
