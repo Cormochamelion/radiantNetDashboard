@@ -1,5 +1,13 @@
 #' Get date matching a statistic with data from the raw_data table.
 #'
+#' @param db_conn Connection to the generation & usage database.
+#' @param stat_fun Function taking a vector and returning an atomic value. Used
+#'   to select a matching date by applying the function to the `time`
+#'   (timestamp) column of the `raw_data` table in the DB.
+#' @param fun_args Arguments to `stat_fun` besides the `raw_data` column.
+#'
+#' @returns A Date object as returned by [lubridate::make_date()].
+#'
 #' @import dbplyr
 #' @importFrom dplyr collect filter tbl select
 #' @importFrom lubridate make_date
@@ -31,6 +39,11 @@ get_raw_data_stat_date <- function(db_conn,
 
 #' Get all dates with data available.
 #'
+#' @param db_conn Connection to the generation & usage database.
+#'
+#' @returns A vector of Date objects representing all dates with aggregated data
+#'   in the DB.
+#'
 #' @import dbplyr
 #' @importFrom dplyr arrange collect tbl select
 #' @importFrom lubridate make_date
@@ -49,6 +62,11 @@ get_data_dates <- function(db_conn) {
 
 #' Load `table_name` into memory as a tibble.
 #'
+#' @param table_name Name of the table in the DB which should be retrieved.
+#' @param db_conn Connection to the generation & usage database.
+#'
+#' @returns A [tibble::tibble()] of the table with `table_name`.
+#'
 #' @import dbplyr
 #' @importFrom dplyr collect tbl
 get_table_df <- function(table_name, db_conn) {
@@ -57,10 +75,30 @@ get_table_df <- function(table_name, db_conn) {
     collect()
 }
 
+#' Load the `daily_aggregated` table into memory as a tibble.
+#'
+#' @param db_conn Connection to the generation & usage database.
+#'
+#' @returns A [tibble::tibble()] of the `daily_aggregated` table.
 get_daily_agg_df <- function(db_conn) get_table_df("daily_aggregated", db_conn)
+
+#' Load the `raw_data` table into memory as a tibble.
+#'
+#' @param db_conn Connection to the generation & usage database.
+#'
+#' @returns A [tibble::tibble()] of the `raw_data` table.
 get_raw_data_df <- function(db_conn) get_table_df("raw_data", db_conn)
 
 #' Load the raw data df filtered for a given date into memory as a tibble.
+#'
+#' @param db_conn Connection to the generation & usage database.
+#' @param date String describing the date for which data should be retrieved.
+#'   parsed into a date object internally.
+#' @param format Format of the `date` string, for parsing it to a date object.
+#'   Parsing is done via [base::strptime()].
+#'
+#' @returns A [tibble::tibble()] of the `raw_data` table with only the data for
+#'   the specified date.
 #'
 #' @import dbplyr
 #' @importFrom dplyr collect filter tbl

@@ -6,6 +6,13 @@
 \usage{
 get_data_dates(db_conn)
 }
+\arguments{
+\item{db_conn}{Connection to the generation & usage database.}
+}
+\value{
+A vector of Date objects representing all dates with aggregated data
+in the DB.
+}
 \description{
 Get all dates with data available.
 }

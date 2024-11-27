@@ -6,6 +6,18 @@
 \usage{
 get_raw_data_stat_date(db_conn, stat_fun = min, fun_args = list(na.rm = TRUE))
 }
+\arguments{
+\item{db_conn}{Connection to the generation & usage database.}
+
+\item{stat_fun}{Function taking a vector and returning an atomic value. Used
+to select a matching date by applying the function to the \code{time}
+(timestamp) column of the \code{raw_data} table in the DB.}
+
+\item{fun_args}{Arguments to \code{stat_fun} besides the \code{raw_data} column.}
+}
+\value{
+A Date object as returned by \code{\link[lubridate:make_datetime]{lubridate::make_date()}}.
+}
 \description{
 Get date matching a statistic with data from the raw_data table.
 }
