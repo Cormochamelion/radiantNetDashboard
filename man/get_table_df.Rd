@@ -6,6 +6,14 @@
 \usage{
 get_table_df(table_name, db_conn)
 }
+\arguments{
+\item{table_name}{Name of the table in the DB which should be retrieved.}
+
+\item{db_conn}{Connection to the generation & usage database.}
+}
+\value{
+A \code{\link[tibble:tibble]{tibble::tibble()}} of the table with \code{table_name}.
+}
 \description{
 Load \code{table_name} into memory as a tibble.
 }

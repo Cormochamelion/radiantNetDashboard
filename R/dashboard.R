@@ -1,4 +1,9 @@
 #' Ensure a date is valid, else return the latest date with data.
+#'
+#' @param date A vector of Date objects of length either 1 or 0.
+#' @param db_conn Connection to the generation & usage database.
+#'
+#' @returns An atomic Date vector of length 1.
 ensure_safe_date <- function(date, db_conn) {
   if (length(date) != 1) {
     date <- get_raw_data_stat_date(db_conn, stat_fun = max)

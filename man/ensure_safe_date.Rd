@@ -6,6 +6,14 @@
 \usage{
 ensure_safe_date(date, db_conn)
 }
+\arguments{
+\item{date}{A vector of Date objects of length either 1 or 0.}
+
+\item{db_conn}{Connection to the generation & usage database.}
+}
+\value{
+An atomic Date vector of length 1.
+}
 \description{
 Ensure a date is valid, else return the latest date with data.
 }

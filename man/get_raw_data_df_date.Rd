@@ -6,6 +6,19 @@
 \usage{
 get_raw_data_df_date(db_conn, date, format = "\%Y-\%m-\%d")
 }
+\arguments{
+\item{db_conn}{Connection to the generation & usage database.}
+
+\item{date}{String describing the date for which data should be retrieved.
+parsed into a date object internally.}
+
+\item{format}{Format of the \code{date} string, for parsing it to a date object.
+Parsing is done via \code{\link[base:strptime]{base::strptime()}}.}
+}
+\value{
+A \code{\link[tibble:tibble]{tibble::tibble()}} of the \code{raw_data} table with only the data for
+the specified date.
+}
 \description{
 Load the raw data df filtered for a given date into memory as a tibble.
 }
