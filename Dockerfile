@@ -13,4 +13,4 @@ RUN Rscript -e "devtools::install()"
 
 EXPOSE ${SHINY_PORT}
 
-ENTRYPOINT dev/run_app.sh
+ENTRYPOINT ["dev/run_app.sh"]
