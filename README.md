@@ -51,6 +51,14 @@ guix time-machine -C .guix/channels.scm -- shell -m .guix/manifest.scm
 
 ## Development
 
+### Tests
+
+Run tests locally via
+
+``` sh
+R --vanilla -q -e "devtools::test()"
+```
+
 ### Building the README.md
 
 The `README.Rmd` file is used to produce the `README.md` file. The
