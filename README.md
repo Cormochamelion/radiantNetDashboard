@@ -59,6 +59,14 @@ Run tests locally via
 R --vanilla -q -e "devtools::test()"
 ```
 
+Alternatively run the tests inside a container like so:
+
+``` sh
+docker build --target test -t "radiant-net-dashboard" . && \
+  docker run -it --rm --network=host \
+    --name radiant-net-dashboard radiant-net-dashboard
+```
+
 ### Building the README.md
 
 The `README.Rmd` file is used to produce the `README.md` file. The
