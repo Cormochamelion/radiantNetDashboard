@@ -48,3 +48,14 @@ Enter a development environment by running
 ``` sh
 guix time-machine -C .guix/channels.scm -- shell -m .guix/manifest.scm
 ```
+
+## Development
+
+### Building the README.md
+
+The `README.Rmd` file is used to produce the `README.md` file. The
+latter can be built from the former by running
+
+``` sh
+R --vanilla -q -e "devtools::build_readme()"
+```
