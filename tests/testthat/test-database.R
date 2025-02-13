@@ -47,9 +47,9 @@ test_that(
   {
     db_conn <- local_gen_db_conn()
 
-    min_Date <- get_raw_data_stat_date(db_conn)
+    min_date <- get_raw_data_stat_date(db_conn)
 
-    expect_in("Date", class(min_Date))
+    expect_in("Date", class(min_date))
   }
 )
 
@@ -58,9 +58,9 @@ test_that(
   {
     db_conn <- local_gen_db_conn()
 
-    min_Date <- get_raw_data_stat_date(db_conn)
+    min_date <- get_raw_data_stat_date(db_conn)
 
-    expect_length(min_Date, 1)
+    expect_length(min_date, 1)
   }
 )
 
@@ -91,8 +91,8 @@ test_that(
   {
     db_conn <- local_gen_db_conn()
 
-    min_Date <- get_raw_data_stat_date(db_conn)
-    date_df <- get_raw_data_df_date(db_conn, min_Date)
+    min_date <- get_raw_data_stat_date(db_conn)
+    date_df <- get_raw_data_df_date(db_conn, min_date)
 
     expect_in("data.frame", class(date_df))
   }
@@ -103,8 +103,8 @@ test_that(
   {
     db_conn <- local_gen_db_conn()
 
-    min_Date <- get_raw_data_stat_date(db_conn)
-    date_df <- get_raw_data_df_date(db_conn, min_Date)
+    min_date <- get_raw_data_stat_date(db_conn)
+    date_df <- get_raw_data_df_date(db_conn, min_date)
 
     expect_gte(nrow(date_df), 1)
   }
