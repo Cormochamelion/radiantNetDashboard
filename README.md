@@ -32,7 +32,7 @@ Simply run:
 
 ``` r
 devtools::load_all()
-shiny::runApp(radiantNetDashboard())
+shiny::runApp(radiant_net_dashboard())
 ```
 
 ### Docker
