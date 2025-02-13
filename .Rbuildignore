@@ -3,5 +3,6 @@
 ^README\.Rmd$
 ^\.git$
 ^\.guix$
+^\.vscode$
 ^dev$
 ^\.github$

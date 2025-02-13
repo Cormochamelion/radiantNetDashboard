@@ -21,6 +21,8 @@
                                  "r-dbi"
                                  "r-devtools"
                                  "r-import"
+                                 "r-httpgd"
+                                 "r-languageserver"
                                  "r-testthat"
                                  "r-styler"
                                  "r-usethis")))

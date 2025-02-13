@@ -1,0 +1,7 @@
+#! /usr/bin/env bash
+
+set -eo pipefail
+
+guix time-machine -C .guix/channels.scm -- \
+  shell -m .guix/manifest.scm -f .guix/guix.scm \
+    -- R "$@"
