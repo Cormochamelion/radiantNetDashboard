@@ -79,3 +79,8 @@ latter can be built from the former by running
 ``` sh
 R --vanilla -q -e "devtools::build_readme()"
 ```
+
+### Other tasks
+
+- Linting: `lintr::lint_package(exclusions = "tests/")`
+- Styling: `styler::style_pkg()`
