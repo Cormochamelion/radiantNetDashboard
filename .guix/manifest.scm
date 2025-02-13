@@ -23,6 +23,7 @@
                                  "r-import"
                                  "r-httpgd"
                                  "r-languageserver"
+                                 "r-lintr"
                                  "r-testthat"
                                  "r-styler"
                                  "r-usethis")))
