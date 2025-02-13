@@ -12,4 +12,4 @@
       (channel
        (name 'guix-cran)
        (url "https://github.com/guix-science/guix-cran.git")
-       (commit "007648bb33aae2db137bf6b38e5d220361cc960a")))
+       (commit "4a01c9eb50824d07bbcbeeb5854e110b3583b658")))
