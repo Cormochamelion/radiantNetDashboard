@@ -65,7 +65,7 @@ get_app_with_pool <- function() {
 #' @param ... Arguments passed to [shiny::shinyApp()].
 #' @importFrom shiny shinyApp
 #' @export
-radiantNetDashboard <- function(...) {
+radiant_net_dashboard <- function(...) {
   components <- get_app_with_pool()
   shinyApp(components$ui, components$server, ...)
 }
