@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 PORT="${SHINY_PORT:-6542}"
-APP_COMMAND="shiny::runApp(radiantNetDashboard::radiant_net_dashboard(), port = $PORT)"
+APP_COMMAND="shiny::runApp(radiantNetDashboard::radiantNetDashboard(), port = $PORT)"
 R_COMMAND="Rscript --vanilla -e"
 
 if command -v guix &> /dev/null

@@ -8,6 +8,6 @@ skip_if_not(
 test_that(
   "the dashboard can be started without issue",
   {
-    expect_no_error(AppDriver$new(radiant_net_dashboard()))
+    expect_no_error(AppDriver$new(radiantNetDashboard()))
   }
 )
