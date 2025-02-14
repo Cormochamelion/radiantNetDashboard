@@ -11,12 +11,68 @@ ensure_safe_date <- function(date, db_conn) {
   date
 }
 
+#' Server for the Shiny module displaying the data for daily production.
+#'
+#' @param id See same argument in [shiny::moduleServer()].
+#' @param db_pool Pool of connections to the generation & usage database.
+#'
+#' @importFrom DT renderDT
+#' @importFrom shiny moduleServer renderPlot reactive
+dailyProductionServer <- function(id, db_pool) {
+  moduleServer(
+    id,
+    function(input, output, ...) {
+      safe_date <- reactive(ensure_safe_date(input$raw_data_date, db_pool))
+      daily_agg_df <- reactive(get_raw_data_df_date(db_pool, safe_date()))
+
+      output$daily_state_of_charge <- renderPlot(
+        variable_plot(daily_agg_df(), StateOfCharge)
+      )
+
+      output$daily_wattage <- renderPlot(wattage_plot(daily_agg_df()))
+
+      output$daily_raw_df <- renderDT(daily_agg_df())
+    }
+  )
+}
+
+#' UI elements for the Shiny module displaying the data for daily production.
+#'
+#' @param id See same argument in [shiny::moduleServer()].
+#' @param db_pool Pool of connections to the generation & usage database.
+#'
+#' @importFrom DT DTOutput
+#' @importFrom shiny dateInput NS plotOutput tagList
+dailyProductionUI <- function(id, db_pool) {
+  tagList(
+    {
+      all_dates <- get_data_dates(db_pool)
+      start_date <- all_dates[1]
+      stop_date <- all_dates[length(all_dates)]
+
+      full_date_range <- seq(start_date, stop_date, by = "day")
+      no_data_dates <- setdiff(full_date_range, all_dates)
+
+      dateInput(
+        NS(id, "raw_data_date"),
+        "Daily output",
+        value = stop_date,
+        min = start_date,
+        max = stop_date,
+        datesdisabled = no_data_dates
+      )
+    },
+    plotOutput(NS(id, "daily_wattage")),
+    plotOutput(NS(id, "daily_state_of_charge")),
+    DTOutput(NS(id, "daily_raw_df"))
+  )
+}
+
 #' Generate a list containing server and UI components for the dashboard bundled
 #' with a connection pool to the app's database.
 #'
-#' @importFrom DT DTOutput renderDT
 #' @importFrom pool dbPool poolClose
-#' @importFrom shiny dateInput fluidPage onStop plotOutput reactive renderPlot
+#' @importFrom shiny fluidPage onStop
 #' @importFrom RSQLite SQLite
 get_app_with_pool <- function() {
   db_pool <- dbPool(
@@ -28,38 +84,10 @@ get_app_with_pool <- function() {
 
   list(
     server = function(input, output) {
-      safe_date <- reactive(ensure_safe_date(input$raw_data_date, db_pool))
-      daily_agg_df <- reactive(get_raw_data_df_date(db_pool, safe_date()))
-
-      output$daily_state_of_charge <- renderPlot(
-        variable_plot(daily_agg_df(), StateOfCharge)
-      )
-
-      output$daily_wattage <- renderPlot(wattage_plot(daily_agg_df()))
-
-      output$daily_raw_df <- renderDT(daily_agg_df())
+      dailyProductionServer("daily_production", db_pool)
     },
     ui = fluidPage(
-      {
-        all_dates <- get_data_dates(db_pool)
-        start_date <- all_dates[1]
-        stop_date <- all_dates[length(all_dates)]
-
-        full_date_range <- seq(start_date, stop_date, by = "day")
-        no_data_dates <- setdiff(full_date_range, all_dates)
-
-        dateInput(
-          "raw_data_date",
-          "Daily output",
-          value = stop_date,
-          min = start_date,
-          max = stop_date,
-          datesdisabled = no_data_dates
-        )
-      },
-      plotOutput("daily_wattage"),
-      plotOutput("daily_state_of_charge"),
-      DTOutput("daily_raw_df")
+      dailyProductionUI("daily_production", db_pool)
     )
   )
 }
