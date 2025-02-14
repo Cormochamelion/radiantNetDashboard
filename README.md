@@ -35,7 +35,7 @@ devtools::load_all()
 
 # Disable opening the browser for the case that none is installed in the
 # environment.
-shiny::runApp(radiant_net_dashboard(), launch.browser = FALSE)
+shiny::runApp(radiantNetDashboard(), launch.browser = FALSE)
 ```
 
 ### Docker
