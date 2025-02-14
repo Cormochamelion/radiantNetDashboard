@@ -23,8 +23,10 @@
                                  "r-import"
                                  "r-lintr"
                                  "r-testthat"
+                                 "r-shinytest2"
                                  "r-styler"
-                                 "r-usethis")))
+                                 "r-usethis"
+                                 "ungoogled-chromium")))
 
 ;; For interactive development with VSCode.
 (define %vscode-packages (map specification->package
