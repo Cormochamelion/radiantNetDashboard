@@ -1,3 +1,5 @@
+import::here("purrr", "map", "map_vec")
+
 test_that(
   "daily_agg_df is loaded",
   {
