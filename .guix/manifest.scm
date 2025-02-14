@@ -21,11 +21,14 @@
                                  "r-dbi"
                                  "r-devtools"
                                  "r-import"
-                                 "r-httpgd"
-                                 "r-languageserver"
                                  "r-lintr"
                                  "r-testthat"
                                  "r-styler"
                                  "r-usethis")))
 
-(packages->manifest (append %dev-packages %packages))
+;; For interactive development with VSCode.
+(define %vscode-packages (map specification->package
+                              (list "r-httpgd"
+                                    "r-languageserver")))
+
+(packages->manifest (append %vscode-packages %dev-packages %packages))
