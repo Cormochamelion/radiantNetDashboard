@@ -28,7 +28,8 @@
 
 ;; For interactive development with VSCode.
 (define %vscode-packages (map specification->package
-                              (list "r-httpgd"
+                              (list "python-radian"
+                                    "r-httpgd"
                                     "r-languageserver")))
 
 (packages->manifest (append %vscode-packages %dev-packages %packages))
