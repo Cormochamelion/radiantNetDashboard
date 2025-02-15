@@ -1,2 +1,3 @@
 # R testing
 */testthat-problems.rds
+*.log
