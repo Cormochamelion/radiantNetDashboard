@@ -4,10 +4,13 @@
 \alias{get_data_dates}
 \title{Get all dates with data available.}
 \usage{
-get_data_dates(db_conn)
+get_data_dates(db_conn, level = "day")
 }
 \arguments{
 \item{db_conn}{Connection to the generation & usage database.}
+
+\item{level}{The level of time for which unique dates should be retrieved.
+One of "year", "month", or "day".}
 }
 \value{
 A vector of Date objects representing all dates with aggregated data
