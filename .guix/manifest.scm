@@ -1,7 +1,8 @@
 (use-modules (guix profiles))
 
 (define %packages (map specification->package
-                       (list "r-config"
+                       (list "r-bslib"
+                             "r-config"
                              "r-dbplyr"
                              "r-dplyr"
                              "r-dt"
