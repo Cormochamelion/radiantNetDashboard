@@ -11,6 +11,9 @@ ensure_safe_date <- function(date, db_conn) {
   date
 }
 
+#' Generate a list containing server and UI components for the dashboard bundled
+#' with a connection pool to the app's database.
+#'
 #' @importFrom DT DTOutput renderDT
 #' @importFrom pool dbPool poolClose
 #' @importFrom shiny dateInput fluidPage onStop plotOutput reactive renderPlot
