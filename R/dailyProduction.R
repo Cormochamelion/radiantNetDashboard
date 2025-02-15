@@ -55,7 +55,7 @@ dailyProductionUI <- function(id, db_pool) {
 
       dateInput(
         NS(id, "raw_data_date"),
-        "Daily output",
+        "Select date",
         value = stop_date,
         min = start_date,
         max = stop_date,
