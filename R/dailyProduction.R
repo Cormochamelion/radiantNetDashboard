@@ -41,6 +41,7 @@ dailyProductionServer <- function(id, db_pool) {
 #' @param id See same argument in [shiny::moduleServer()].
 #' @param db_pool Pool of connections to the generation & usage database.
 #'
+#' @importFrom bslib card card_header nav_panel navset_card_tab
 #' @importFrom DT DTOutput
 #' @importFrom shiny dateInput NS plotOutput tagList
 dailyProductionUI <- function(id, db_pool) {
@@ -62,8 +63,17 @@ dailyProductionUI <- function(id, db_pool) {
         datesdisabled = no_data_dates
       )
     },
-    plotOutput(NS(id, "daily_wattage")),
-    plotOutput(NS(id, "daily_state_of_charge")),
-    DTOutput(NS(id, "daily_raw_df"))
+    navset_card_tab(
+      nav_panel(
+        "Power & charge",
+        plotOutput(NS(id, "daily_wattage")),
+        plotOutput(NS(id, "daily_state_of_charge"))
+      ),
+      nav_panel(
+        "Complete table",
+        DTOutput(NS(id, "daily_raw_df"))
+      ),
+      full_screen = TRUE
+    )
   )
 }
