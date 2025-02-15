@@ -40,24 +40,55 @@ get_raw_data_stat_date <- function(db_conn,
 #' Get all dates with data available.
 #'
 #' @param db_conn Connection to the generation & usage database.
+#' @param level The level of time for which unique dates should be retrieved.
+#'    One of "year", "month", or "day".
 #'
 #' @returns A vector of Date objects representing all dates with aggregated data
 #'   in the DB.
 #'
 #' @import dbplyr
-#' @importFrom dplyr arrange collect tbl select
+#' @importFrom dplyr all_of arrange collect distinct tbl select
 #' @importFrom lubridate make_date
 #' @importFrom purrr map_vec pmap
-#' @importFrom rlang list2
-get_data_dates <- function(db_conn) {
+#' @importFrom rlang expr list2 syms
+get_data_dates <- function(db_conn, level = "day") {
+  all_components <- c("year", "month", "day")
+
+  components_syms <- switch(level,
+    "day" = all_components,
+    "month" = all_components[1:2],
+    "year" = all_components[1],
+    stop(
+      paste0(
+        "Unknown time level: ", level, ". Must be one of ",
+        paste(all_components, collapse = ", "), "."
+      )
+    )
+  ) %>%
+    syms()
+
+  # I'd really like to use all_of for these (except the make_date), but that
+  # can't be translated to SQL.
+  select_expr <- expr(select(., !!!components_syms))
+  arrange_expr <- expr(arrange(., !!!components_syms))
+  # FIXME Figure out why lintr doesn't see that this variable is used.
+  # nolint start: object_usage_linter.
+  date_expr <- expr(make_date(!!!components_syms))
+  # nolint end
+
   db_conn %>%
     tbl("daily_aggregated") %>%
-    select(year, month, day) %>%
-    arrange(year, month, day) %>%
+    {
+      eval(select_expr)
+    } %>%
+    distinct() %>%
+    {
+      eval(arrange_expr)
+    } %>%
     collect() %>%
     # Convert to list of rows.
     pmap(list2) %>%
-    map_vec(\(row) with(row, make_date(year, month, day)))
+    map_vec(\(row) with(row, eval(date_expr)))
 }
 
 #' Load `table_name` into memory as a tibble.
