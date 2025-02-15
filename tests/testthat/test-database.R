@@ -89,6 +89,20 @@ test_that(
 )
 
 test_that(
+  "get_data_dates returns unique items for each level",
+  {
+    db_conn <- local_gen_db_conn()
+
+    c("year", "month", "day") %>%
+      map(\(level) get_data_dates(db_conn, level)) %>%
+      map(duplicated) %>%
+      map_vec(any) %>%
+      any() %>%
+      expect_false()
+  }
+)
+
+test_that(
   "get_raw_data_df_date returns a dataframe",
   {
     db_conn <- local_gen_db_conn()
