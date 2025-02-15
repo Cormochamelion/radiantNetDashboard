@@ -2,6 +2,7 @@
 
 (define %packages (map specification->package
                        (list "r-bslib"
+                             "r-bsicons"
                              "r-config"
                              "r-dbplyr"
                              "r-dplyr"
