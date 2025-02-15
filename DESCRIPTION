@@ -30,6 +30,7 @@ Suggests:
     DBI,
     import,
     testthat (>= 3.0.0),
+    shinytest2,
     withr
 Config/testthat/edition: 3
 Language: en-US
