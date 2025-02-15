@@ -36,6 +36,32 @@ dailyProductionServer <- function(id, db_pool) {
   )
 }
 
+#' Create a dateInput with only those dates enabled for which there is data in
+#' a DB.
+#'
+#' @param inputId See same argument in [shiny::dateInput()].
+#' @param db_pool Pool of connections to the generation & usage database.
+#'
+#' @importFrom shiny dateInput
+safeDateInput <- function(inputId, db_pool) {
+  all_dates <- get_data_dates(db_pool)
+  start_date <- all_dates[1]
+  stop_date <- all_dates[length(all_dates)]
+
+  full_date_range <- seq(start_date, stop_date, by = "day")
+  no_data_dates <- setdiff(full_date_range, all_dates)
+
+  dateInput(
+    inputId,
+    "Select date",
+    value = stop_date,
+    min = start_date,
+    max = stop_date,
+    datesdisabled = no_data_dates
+  )
+}
+
+
 #' UI elements for the Shiny module displaying the data for daily production.
 #'
 #' @param id See same argument in [shiny::moduleServer()].
@@ -43,26 +69,10 @@ dailyProductionServer <- function(id, db_pool) {
 #'
 #' @importFrom bslib card card_header nav_panel navset_card_tab
 #' @importFrom DT DTOutput
-#' @importFrom shiny dateInput NS plotOutput tagList
+#' @importFrom shiny NS plotOutput tagList
 dailyProductionUI <- function(id, db_pool) {
   tagList(
-    {
-      all_dates <- get_data_dates(db_pool)
-      start_date <- all_dates[1]
-      stop_date <- all_dates[length(all_dates)]
-
-      full_date_range <- seq(start_date, stop_date, by = "day")
-      no_data_dates <- setdiff(full_date_range, all_dates)
-
-      dateInput(
-        NS(id, "raw_data_date"),
-        "Select date",
-        value = stop_date,
-        min = start_date,
-        max = stop_date,
-        datesdisabled = no_data_dates
-      )
-    },
+    safeDateInput(NS(id, "raw_data_date"), db_pool),
     navset_card_tab(
       nav_panel(
         "Power & charge",
