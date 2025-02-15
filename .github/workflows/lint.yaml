@@ -26,10 +26,7 @@ jobs:
           needs: lint
 
       - name: Lint
-        # tests excluded since I can't figure out how to get it to understand
-        # not to flag objects imported via the import package.
-        # FIXME: this.
-        run: lintr::lint_package(exclusions = "tests/")
+        run: lintr::lint_package()
         shell: Rscript {0}
         env:
           LINTR_ERROR_ON_LINT: true
