@@ -7,8 +7,6 @@ ENV SHINY_PORT=6542
 
 WORKDIR /app
 
-COPY . ./
-
 FROM base AS test
 
 # FIXME Find someone more trustworthy to get chromium from.
@@ -19,11 +17,15 @@ RUN apt-get install ungoogled-chromium -y
 
 ENV CHROMOTE_CHROME=ungoogled-chromium
 
+COPY . ./
+
 RUN Rscript -e "devtools::install(dependencies = 'soft')"
 
 ENTRYPOINT ["R", "--vanilla", "-q", "-e", "devtools::check()"]
 
 FROM base AS prod
+
+COPY . ./
 
 RUN Rscript -e "devtools::install()"
 
