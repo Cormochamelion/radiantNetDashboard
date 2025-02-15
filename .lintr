@@ -1,4 +1,10 @@
 linters: linters_with_defaults(
     object_name_linter(styles = c("camelCase", "snake_case", "symbols"))
  )
+exclusions: list(
+    # tests excluded since I can't figure out how to get it to understand
+    # not to flag objects imported via the import package.
+    # FIXME: this.
+    "tests/testthat"
+  )
 encoding: "UTF-8"
