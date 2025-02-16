@@ -16,7 +16,8 @@
                              "r-rlang"
                              "r-rsqlite"
                              "r-tidyr"
-                             "r-shiny")))
+                             "r-shiny"
+                             "r-stringr")))
 
 (define %dev-packages (map specification->package
                            (list "r"
