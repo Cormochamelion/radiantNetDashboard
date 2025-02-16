@@ -67,7 +67,7 @@ Alternatively run the tests inside a container like so:
 
 ``` sh
 docker build --target test -t "radiant-net-dashboard" . && \
-  docker run -it --rm --network=host \
+  docker run -it --rm \
     --name radiant-net-dashboard radiant-net-dashboard
 ```
 
