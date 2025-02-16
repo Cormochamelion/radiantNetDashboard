@@ -13,7 +13,7 @@ FROM base AS test
 
 RUN Rscript -e "devtools::install(dependencies = 'soft')"
 
-ENTRYPOINT ["R", "--vanilla", "-q", "-e", "devtools::test()"]
+ENTRYPOINT ["R", "--vanilla", "-q", "-e", "devtools::check()"]
 
 FROM base AS prod
 
