@@ -37,8 +37,9 @@ report_panel <- function(title, db_pool, id_list) {
 #' Generate a list containing server and UI components for the dashboard bundled
 #' with a connection pool to the app's database.
 #'
+#' @importFrom bslib nav_panel navset_pill_list page_navbar
 #' @importFrom pool dbPool poolClose
-#' @importFrom shiny fluidPage onStop
+#' @importFrom shiny onStop
 #' @importFrom RSQLite SQLite
 get_app_with_pool <- function() {
   db_pool <- dbPool(
@@ -50,10 +51,26 @@ get_app_with_pool <- function() {
 
   list(
     server = function(input, output) {
+      dailyProductionServer("daily_production", db_pool)
+      aggregatedProductionServer("monthly_production", db_pool, "month")
+      aggregatedProductionServer("yearly_production", db_pool, "year")
+      aggregatedProductionServer("total_production", db_pool, "total")
       dailyProductionServer("daily_consumption", db_pool)
     },
-    ui = fluidPage(
-      dailyProductionUI("daily_consumption", db_pool)
+    ui = page_navbar(
+      title = "RadiantNetDashboard",
+      bg = "#4d4d4d",
+      inverse = TRUE,
+      report_panel(
+        "Production",
+        db_pool,
+        list(
+          "daily" = "daily_production",
+          "monthly" = "monthly_production",
+          "yearly" = "yearly_production",
+          "total" = "total_production"
+        )
+      )
     )
   )
 }
