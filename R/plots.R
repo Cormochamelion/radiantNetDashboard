@@ -70,3 +70,34 @@ wattage_plot <- function(data) {
     theme_minimal() +
     theme(legend.position = "bottom")
 }
+
+#' @importFrom dplyr filter
+#' @importFrom purrr imap
+#' @importFrom rlang new_formula
+#'
+#' @import ggplot2
+wattage_col_plot <- function(data) {
+  wattage_cols <- c(
+    "To Battery" = "FromGenToBatt",
+    "To Consumer" = "FromGenToConsumer",
+    "To Grid" = "FromGenToGrid",
+    "To Wallbox" = "FromGenToWattPilot",
+    "Total consumed" = "ToConsumer"
+  )
+
+  col_rename <- imap(
+    wattage_cols,
+    \(old_col, new_col) new_formula(old_col, new_col)
+  )
+
+  data %>%
+    filter(wattage_type %in% wattage_cols) %>%
+    mutate(wattage_type = case_match(wattage_type, !!!col_rename)) %>%
+    ggplot(
+      mapping = aes(date, kwh, fill = wattage_type)
+    ) +
+    geom_col() +
+    labs(x = NULL, y = "Power [W]", color = NULL, fill = NULL) +
+    theme_minimal() +
+    theme(legend.position = "bottom")
+}

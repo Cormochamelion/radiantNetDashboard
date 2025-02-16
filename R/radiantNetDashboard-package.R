@@ -2,6 +2,7 @@
 # `devtools::check()` doesn't complain about that.
 utils::globalVariables(
   c(
-    ".", "time", "hour", "minute", "wattage_type", "wattage", "StateOfCharge"
+    ".", "time", "hour", "kwh", "minute", "wattage_type", "wattage",
+    "StateOfCharge"
   )
 )
