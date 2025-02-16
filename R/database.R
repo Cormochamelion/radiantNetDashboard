@@ -152,3 +152,53 @@ get_raw_data_df_date <- function(db_conn, date, format = "%Y-%m-%d") {
     ) %>%
     collect()
 }
+
+#' Get all the daily aggregated data on the same level of time as a given date.
+#' E.g.: All days in the same month as 2024-12-01, or all days in the same year
+#' as 2024-01-01.
+#'
+#' @param db_conn Connection to the generation & usage database.
+#' @param date String describing the date for which data should be retrieved.
+#'   parsed into a date object internally.
+#' @param format Format of the `date` string, for parsing it to a date object.
+#'   Parsing is done via [base::strptime()].
+#' @param level The level of time for which unique dates should be retrieved.
+#'    One of "total", "year", or "month".
+#'
+#'
+#' @returns A [tibble::tibble()] of the `daily_aggregated` table with only the
+#'   data for the specified date.
+#'
+#' @import dbplyr
+#' @importFrom dplyr collect filter tbl
+#' @importFrom lubridate day month year
+#' @importFrom rlang expr
+get_agg_df_date <- function(db_conn,
+                            date,
+                            format = "%Y-%m-%d",
+                            level = "month") {
+  parsed_date <- strptime(date, format)
+
+  filter_expr <- switch(level,
+    "month" = expr(
+      filter(., month == month(parsed_date), year == year(parsed_date))
+    ),
+    "year" = expr(filter(., year == year(parsed_date))),
+    "total" = expr(filter(.)),
+    stop(
+      paste0(
+        "Unknown time level: ", level, ". Must be one of month, year, total."
+      )
+    )
+  )
+
+  db_conn %>%
+    tbl("daily_aggregated") %>%
+    # Since this table is likely never going to grow past a couple thousands of
+    # rows, it's ok to collect it right away without fearing any performance
+    # issues.
+    collect() %>%
+    {
+      eval(filter_expr)
+    }
+}
