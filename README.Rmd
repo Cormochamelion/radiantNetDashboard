@@ -81,9 +81,9 @@ R --vanilla -q -e "devtools::test()"
 Alternatively run the tests inside a container like so:
 
 ```{sh docker-test, eval = FALSE}
-docker build --target test -t "radiant-net-dashboard" . && \
+docker build --target test -t "radiant-net-dashboard-test" . && \
   docker run -it --rm \
-    --name radiant-net-dashboard radiant-net-dashboard
+    --name radiant-net-dashboard-test radiant-net-dashboard-test
 ```
 
 ### Building the README.md
