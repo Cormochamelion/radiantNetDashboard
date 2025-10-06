@@ -1,7 +1,10 @@
 FROM rocker/r2u AS base
 
 RUN apt-get update && \
-    apt-get install r-cran-devtools r-cran-shiny -y
+    apt-get install -y \
+        r-cran-devtools \
+        r-cran-shiny \
+        r-cran-remotes
 
 ENV SHINY_PORT=6542
 
